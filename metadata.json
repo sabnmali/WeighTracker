@@ -1,0 +1,5 @@
+{
+  "name": "WeighTracker",
+  "description": "A minimalist, high-performance weight tracking application featuring biological metric analysis, calorie deficit calculation, and fluid data visualization.",
+  "requestFramePermissions": []
+}
