@@ -27,7 +27,11 @@ export const calculateDeficit = (profile: UserProfile): CalculationResult | null
   const targetDate = parseISO(profile.targetDate);
   const daysRemaining = differenceInDays(targetDate, today);
 
-  if (daysRemaining <= 0) {
+  let planMode: 'loss' | 'gain' | 'maintain' = 'maintain';
+  if (profile.targetWeight < profile.currentWeight) planMode = 'loss';
+  if (profile.targetWeight > profile.currentWeight) planMode = 'gain';
+
+  if (daysRemaining <= 0 || planMode === 'maintain') {
      return {
         bmr,
         tdee,
@@ -35,32 +39,44 @@ export const calculateDeficit = (profile: UserProfile): CalculationResult | null
         dailyDeficitRequired: 0,
         dailyCalorieTarget: tdee,
         isRealistic: true,
-        daysRemaining: 0
+        daysRemaining: 0,
+        planMode
      }
   }
 
-  const totalWeightLossNeeded = profile.currentWeight - profile.targetWeight;
-  const totalCaloriesToBurn = totalWeightLossNeeded * CALORIES_PER_KG_FAT;
+  // Calculate total change needed (absolute value for math, direction handled by mode)
+  const totalWeightChangeNeeded = Math.abs(profile.currentWeight - profile.targetWeight);
+  const totalCaloriesChange = totalWeightChangeNeeded * CALORIES_PER_KG_FAT;
   
-  // If user wants to gain weight, logic flips, but spec focuses on loss/deficit. 
-  // Handling negative deficit (surplus) for gain implicitly.
+  const dailyChangeRequired = totalCaloriesChange / daysRemaining;
   
-  const dailyDeficitRequired = totalCaloriesToBurn / daysRemaining;
-  const dailyCalorieTarget = tdee - dailyDeficitRequired;
+  // If Loss: Target = TDEE - Deficit
+  // If Gain: Target = TDEE + Surplus
+  const dailyCalorieTarget = planMode === 'loss' 
+    ? tdee - dailyChangeRequired 
+    : tdee + dailyChangeRequired;
 
   const weeksRemaining = daysRemaining / 7;
-  const weeklyLossRequired = totalWeightLossNeeded / weeksRemaining;
+  const weeklyChangeRequired = totalWeightChangeNeeded / weeksRemaining;
 
-  // Realistic check: Warning if > 1kg/week loss is needed or if calories drop dangerously low (<1200 for women, <1500 for men roughly, but simplified here)
-  const isRealistic = weeklyLossRequired <= MAX_SAFE_WEEKLY_LOSS_KG && dailyCalorieTarget > 1000;
+  // Realistic check
+  // Loss: > 1kg/week is aggressive. Calorie target < BMR is usually unsafe.
+  // Gain: > 0.5-1kg/week is often fat rather than muscle.
+  let isRealistic = true;
+  if (planMode === 'loss') {
+      isRealistic = weeklyChangeRequired <= MAX_SAFE_WEEKLY_LOSS_KG && dailyCalorieTarget > 1200;
+  } else if (planMode === 'gain') {
+      isRealistic = weeklyChangeRequired <= MAX_SAFE_WEEKLY_LOSS_KG; // Using same max metric for simplicity
+  }
 
   return {
     bmr,
     tdee,
-    weeklyLossRequired,
-    dailyDeficitRequired,
+    weeklyLossRequired: weeklyChangeRequired, // naming kept consistent with type, represents "change"
+    dailyDeficitRequired: dailyChangeRequired, // represents magnitude of deficit or surplus
     dailyCalorieTarget,
     isRealistic,
     daysRemaining,
+    planMode
   };
 };

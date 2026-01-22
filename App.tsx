@@ -7,7 +7,6 @@ import GoalSettings from './components/GoalSettings';
 import { getProfile, saveProfile, getLogs, saveLogs } from './services/storage';
 import { calculateDeficit } from './services/calculator';
 import { UserProfile, WeightLog, CalculationResult } from './types';
-import { Settings } from 'lucide-react';
 
 const App: React.FC = () => {
   const [profile, setProfile] = useState<UserProfile | null>(null);
@@ -91,14 +90,6 @@ const App: React.FC = () => {
       <header className="w-full max-w-4xl p-6 flex justify-between items-center z-10">
         <Logo />
         <div className="flex items-center gap-4">
-            {profile && (
-                <button 
-                    onClick={() => setShowSettings(true)}
-                    className="p-2 text-slate-500 hover:text-blue-500 transition-colors"
-                >
-                    <Settings size={24} />
-                </button>
-            )}
             <ThemeToggle />
         </div>
       </header>
@@ -115,6 +106,7 @@ const App: React.FC = () => {
                 profile={profile} 
                 metrics={metrics}
                 onAddLog={handleAddLog}
+                onOpenSettings={() => setShowSettings(true)}
             />
         )}
       </main>

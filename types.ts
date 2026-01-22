@@ -35,4 +35,5 @@ export interface CalculationResult {
   dailyCalorieTarget: number; // kcal
   isRealistic: boolean;
   daysRemaining: number;
+  planMode: 'loss' | 'gain' | 'maintain';
 }
