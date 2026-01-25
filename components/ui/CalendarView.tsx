@@ -16,9 +16,10 @@ import { WeightLog } from '../../types';
 
 interface CalendarViewProps {
   logs: WeightLog[];
+  onDateClick: (date: Date, log?: WeightLog) => void;
 }
 
-const CalendarView: React.FC<CalendarViewProps> = ({ logs }) => {
+const CalendarView: React.FC<CalendarViewProps> = ({ logs, onDateClick }) => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
 
   const calendarDays = useMemo(() => {
@@ -73,10 +74,11 @@ const CalendarView: React.FC<CalendarViewProps> = ({ logs }) => {
           const isToday = isSameDay(day, new Date());
 
           return (
-            <div
+            <button
               key={day.toISOString()}
+              onClick={() => onDateClick(day, log)}
               className={`
-                aspect-square p-1 rounded-xl flex flex-col items-center justify-start gap-1 relative border transition-all
+                aspect-square p-1 rounded-xl flex flex-col items-center justify-start gap-1 relative border transition-all hover:scale-105 hover:shadow-md
                 ${isCurrentMonth ? 'bg-white dark:bg-slate-800/50 border-slate-100 dark:border-slate-700/50' : 'bg-slate-50/50 dark:bg-slate-900/20 border-transparent opacity-50'}
                 ${isToday ? 'ring-2 ring-blue-500/50 z-10' : ''}
               `}
@@ -94,7 +96,7 @@ const CalendarView: React.FC<CalendarViewProps> = ({ logs }) => {
                     </div>
                 </div>
               )}
-            </div>
+            </button>
           );
         })}
       </div>

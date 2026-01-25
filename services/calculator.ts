@@ -1,6 +1,6 @@
 import { differenceInDays, parseISO } from 'date-fns';
 import { ACTIVITY_MULTIPLIERS, CALORIES_PER_KG_FAT, MAX_SAFE_WEEKLY_LOSS_KG } from '../constants';
-import { UserProfile, CalculationResult, Gender } from '../types';
+import { UserProfile, CalculationResult, Gender, DietPlan } from '../types';
 
 export const calculateBMR = (
   weight: number,
@@ -17,19 +17,19 @@ export const calculateTDEE = (bmr: number, activityLevel: UserProfile['activityL
   return bmr * ACTIVITY_MULTIPLIERS[activityLevel];
 };
 
-export const calculateDeficit = (profile: UserProfile): CalculationResult | null => {
-  if (!profile.targetWeight || !profile.targetDate) return null;
+export const calculateDeficit = (profile: UserProfile, activePlan: DietPlan | undefined): CalculationResult | null => {
+  if (!activePlan) return null;
 
   const bmr = calculateBMR(profile.currentWeight, profile.height, profile.age, profile.gender);
   const tdee = calculateTDEE(bmr, profile.activityLevel);
 
   const today = new Date();
-  const targetDate = parseISO(profile.targetDate);
+  const targetDate = parseISO(activePlan.targetDate);
   const daysRemaining = differenceInDays(targetDate, today);
 
   let planMode: 'loss' | 'gain' | 'maintain' = 'maintain';
-  if (profile.targetWeight < profile.currentWeight) planMode = 'loss';
-  if (profile.targetWeight > profile.currentWeight) planMode = 'gain';
+  if (activePlan.targetWeight < profile.currentWeight) planMode = 'loss';
+  if (activePlan.targetWeight > profile.currentWeight) planMode = 'gain';
 
   if (daysRemaining <= 0 || planMode === 'maintain') {
      return {
@@ -45,7 +45,7 @@ export const calculateDeficit = (profile: UserProfile): CalculationResult | null
   }
 
   // Calculate total change needed (absolute value for math, direction handled by mode)
-  const totalWeightChangeNeeded = Math.abs(profile.currentWeight - profile.targetWeight);
+  const totalWeightChangeNeeded = Math.abs(profile.currentWeight - activePlan.targetWeight);
   const totalCaloriesChange = totalWeightChangeNeeded * CALORIES_PER_KG_FAT;
   
   const dailyChangeRequired = totalCaloriesChange / daysRemaining;

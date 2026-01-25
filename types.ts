@@ -11,14 +11,26 @@ export enum ActivityLevel {
   Extra = 'Extra Active', // Very hard exercise & physical job
 }
 
+export interface DietPlan {
+  id: string;
+  name: string;
+  startDate: string; // ISO date string
+  targetWeight: number; // kg
+  targetDate: string; // ISO date string
+  isActive: boolean;
+  notes?: string;
+}
+
 export interface UserProfile {
   height: number; // cm
   currentWeight: number; // kg
   age: number;
   gender: Gender;
   activityLevel: ActivityLevel;
-  targetWeight?: number; // kg
-  targetDate?: string; // ISO date string
+  plans: DietPlan[];
+  // Legacy fields for migration support (optional)
+  targetWeight?: number; 
+  targetDate?: string; 
 }
 
 export interface WeightLog {
