@@ -1,15 +1,14 @@
 # Alfabe Flamaları (yazdırılabilir)
 
 Fotoğraftaki flama kartının (lila şerit + kahverengi konturlu harf + görsel)
-A'dan Z'ye tüm harfler için yeniden üretilmiş hâli.
+Türkçe alfabenin 29 harfi için yeniden üretilmiş hâli.
 
 ## Dosyalar
 
 | Dosya | İçerik |
 |---|---|
-| `alphabet-banner-en.pdf` | İngilizce A–Z, 26 flama, 13 sayfa |
 | `alfabe-flama-tr.pdf` | Türkçe A–Z, 29 harf (Ç Ğ İ Ö Ş Ü dâhil), 15 sayfa |
-| `*.html` | Aynı içeriğin tarayıcıdan yazdırılabilir hâli (font gömülü) |
+| `alfabe-flama-tr.html` | Aynı içeriğin tarayıcıdan yazdırılabilir hâli (fontlar gömülü) |
 | `generate.py` | Üreteç betiği |
 | `NotoColorEmoji-subset.woff2` | Vektör renkli emoji fontu (sadece kullanılan karakterler) |
 
@@ -30,8 +29,8 @@ neredeyse görünmez).
 
 ```bash
 python3 generate.py                      # HTML üretir
-chrome --headless --print-to-pdf=out.pdf file://.../alphabet-banner-en.html
+chrome --headless --print-to-pdf=out.pdf file://.../alfabe-flama-tr.html
 ```
 
-Harf–görsel eşleşmelerini değiştirmek için `generate.py` içindeki `EN` / `TR`
-listelerini düzenlemek yeterli.
+Harf–görsel eşleşmelerini değiştirmek için `generate.py` içindeki `TR`
+listesini düzenlemek yeterli.

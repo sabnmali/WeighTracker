@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Alfabe flama (pennant banner) üreteci.
 
-Fotoğraftaki karta benzer flamaları A'dan Z'ye üretir ve doğrudan
-yazdırılabilir tek bir HTML dosyası oluşturur (A4, sayfa başına 4 flama).
+Fotoğraftaki karta benzer flamaları Türkçe alfabenin 29 harfi için üretir
+ve yazdırılabilir tek bir HTML dosyası oluşturur (A4 yatay, sayfa başına 2).
 """
 import base64
 import pathlib
@@ -20,19 +20,7 @@ INK = "#6b5a51"        # kahverengi çizgi rengi
 BAND = "#d5cbe9"       # lila şerit
 BAND_EDGE = "#c7bbe2"
 
-# --- Harf listeleri ---
-EN = [
-    ("A", "🍎", "apple"), ("B", "🎈", "balloon"), ("C", "🐱", "cat"),
-    ("D", "🐶", "dog"), ("E", "🐘", "elephant"), ("F", "🐠", "fish"),
-    ("G", "🦒", "giraffe"), ("H", "🏠", "house"), ("I", "🍦", "ice cream"),
-    ("J", "✈", "jet"), ("K", "🔑", "key"), ("L", "🦁", "lion"),
-    ("M", "🐵", "monkey"), ("N", "🌰", "nut"), ("O", "🍊", "orange"),
-    ("P", "🐧", "penguin"), ("Q", "👑", "queen"), ("R", "🌈", "rainbow"),
-    ("S", "☀", "sun"), ("T", "🌳", "tree"), ("U", "☂", "umbrella"),
-    ("V", "🎻", "violin"), ("W", "🍉", "watermelon"), ("X", "📦", "box"),
-    ("Y", "🧶", "yarn"), ("Z", "🦓", "zebra"),
-]
-
+# --- Harf listesi (Türkçe alfabe, 29 harf) ---
 TR = [
     ("A", "🍐", "armut"), ("B", "🎈", "balon"), ("C", "🐥", "civciv"),
     ("Ç", "🍓", "çilek"), ("D", "🐫", "deve"), ("E", "🐘", "el"),
@@ -175,7 +163,5 @@ def build(letters, title, subtitle, out_path):
 
 
 if __name__ == "__main__":
-    build(EN, "Alphabet Banner A-Z", "printable pennant flags",
-          HERE / "alphabet-banner-en.html")
     build(TR, "Alfabe Flamaları A-Z", "yazdırılabilir flama kartları",
           HERE / "alfabe-flama-tr.html")
