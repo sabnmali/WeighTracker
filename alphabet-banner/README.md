@@ -7,18 +7,21 @@ A'dan Z'ye tüm harfler için yeniden üretilmiş hâli.
 
 | Dosya | İçerik |
 |---|---|
-| `alphabet-banner-en.pdf` | İngilizce A–Z, 26 flama, 7 sayfa |
-| `alfabe-flama-tr.pdf` | Türkçe A–Z, 29 harf (Ç Ğ İ Ö Ş Ü dâhil), 8 sayfa |
+| `alphabet-banner-en.pdf` | İngilizce A–Z, 26 flama, 13 sayfa |
+| `alfabe-flama-tr.pdf` | Türkçe A–Z, 29 harf (Ç Ğ İ Ö Ş Ü dâhil), 15 sayfa |
 | `*.html` | Aynı içeriğin tarayıcıdan yazdırılabilir hâli (font gömülü) |
 | `generate.py` | Üreteç betiği |
+| `NotoColorEmoji-subset.woff2` | Vektör renkli emoji fontu (sadece kullanılan karakterler) |
 
 ## Yazdırma
 
 1. PDF'i aç → Yazdır.
-2. Kağıt: **A4 dikey**, ölçek: **%100 / "gerçek boyut"** (Sayfaya sığdır **kapalı**).
+2. Kağıt: **A4 YATAY (landscape)**, ölçek: **%100 / "gerçek boyut"** (Sayfaya sığdır **kapalı**).
 3. Kenar boşlukları: yok/minimum. Renkli baskı açık.
 
-Her sayfada 4 flama var; flama boyutu **9,2 × 12,8 cm**.
+Her sayfada 2 flama var; flama boyutu **13,8 × 19,2 cm**.
+Görseller vektör (COLRv1) emoji fontundan geliyor; hangi boyutta basılırsa
+basılsın pikselleşmez.
 Kahverengi kontur aynı zamanda kesme çizgisidir.
 Üstteki iki soluk kesikli daire, ip geçirmek için delgeç noktalarıdır (baskıda
 neredeyse görünmez).
