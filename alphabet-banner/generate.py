@@ -25,9 +25,9 @@ TR = [
     ("A", "🍐", "armut"), ("B", "🎈", "balon"), ("C", "🐥", "civciv"),
     ("Ç", "🍓", "çilek"), ("D", "🐫", "deve"), ("E", "🐘", "el"),
     ("F", "🐠", "fil"), ("G", "🌹", "gül"), ("Ğ", "🏔", "dağ"),
-    ("H", "🐓", "horoz"), ("I", "💡", "ışık"), ("İ", "🐄", "inek"),
+    ("H", "🐓", "horoz"), ("I", "💡", "ışık"), ("İ", "🐮", "inek"),
     ("J", "✈", "jet"), ("K", "🐱", "kedi"), ("L", "🍋", "limon"),
-    ("M", "🍌", "muz"), ("N", "🎵", "nota"), ("O", "🚌", "otobüs"),
+    ("M", "🍌", "muz"), ("N", "👵", "nine"), ("O", "🚌", "otobüs"),
     ("Ö", "🦆", "ördek"), ("P", "🍊", "portakal"), ("R", "🤖", "robot"),
     ("S", "🥛", "süt"), ("Ş", "☂", "şemsiye"), ("T", "🐰", "tavşan"),
     ("U", "🐞", "uğur böceği"), ("Ü", "🍇", "üzüm"), ("V", "⛴", "vapur"),
@@ -58,7 +58,7 @@ def flag_svg(upper: str, emoji: str) -> str:
         f"M{inset},{inset} L{W - inset},{inset} L{W - inset},{body} "
         f"L{W / 2},{H - inset} L{inset},{body} Z"
     )
-    band_y, band_h = 26.0, 20.0
+    band_y, band_h = 21.0, 20.0
 
     return f"""<svg class="flag" viewBox="0 0 {W} {H}" xmlns="http://www.w3.org/2000/svg">
   <defs>
@@ -73,7 +73,7 @@ def flag_svg(upper: str, emoji: str) -> str:
     <line x1="0" y1="{band_y + band_h}" x2="{W}" y2="{band_y + band_h}" stroke="{BAND_EDGE}" stroke-width="0.4"/>
   </g>
   <text class="letter" x="{W / 2}" y="{band_y + band_h - 1.5}" text-anchor="middle">{label}</text>
-  <text class="pic" x="{W / 2}" y="{band_y + band_h + 44}" text-anchor="middle">{emoji}</text>
+  <text class="pic" x="{W / 2}" y="{band_y + band_h + 54}" text-anchor="middle">{emoji}</text>
   <circle cx="{W * 0.18}" cy="9" r="2.2" fill="none" stroke="#c9c0ba" stroke-width="0.35" stroke-dasharray="1 1"/>
   <circle cx="{W * 0.82}" cy="9" r="2.2" fill="none" stroke="#c9c0ba" stroke-width="0.35" stroke-dasharray="1 1"/>
   <path d="{path}" fill="none" stroke="{INK}" stroke-width="{SW}" stroke-linejoin="round"/>
@@ -139,7 +139,7 @@ def build(letters, title, subtitle, out_path):
   }}
   .pic {{
     font-family: 'EmojiVector', 'Noto Color Emoji', 'Apple Color Emoji', sans-serif;
-    font-size: 50px;            /* SVG kullanıcı birimi */
+    font-size: 60px;            /* SVG kullanıcı birimi */
   }}
 
   @media screen {{
