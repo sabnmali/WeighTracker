@@ -9,6 +9,7 @@ Türkçe alfabenin 29 harfi için yeniden üretilmiş hâli.
 |---|---|
 | `alfabe-flama-tr.pdf` | Türkçe A–Z, 29 harf (Ç Ğ İ Ö Ş Ü dâhil), 15 sayfa |
 | `alfabe-flama-tr.html` | Aynı içeriğin tarayıcıdan yazdırılabilir hâli (fontlar gömülü) |
+| `onizleme.png` | Tüm kartların tek sayfalık önizlemesi |
 | `generate.py` | Üreteç betiği |
 | `NotoColorEmoji-subset.woff2` | Vektör renkli emoji fontu (sadece kullanılan karakterler) |
 
@@ -34,3 +35,18 @@ chrome --headless --print-to-pdf=out.pdf file://.../alfabe-flama-tr.html
 
 Harf–görsel eşleşmelerini değiştirmek için `generate.py` içindeki `TR`
 listesini düzenlemek yeterli.
+
+## Harf–görsel listesi
+
+|  |  |  |  |  |
+|---|---|---|---|---|
+| **A** armut | **B** balon | **C** civciv | **Ç** çilek | **D** deve |
+| **E** el | **F** fil | **G** gül | **Ğ** dağ | **H** hamster |
+| **I** ışık | **İ** inek | **J** jandarma | **K** kedi | **L** limon |
+| **M** muz | **N** nar | **O** otobüs | **Ö** ördek | **P** portakal |
+| **R** robot | **S** süt | **Ş** şemsiye | **T** tavşan | **U** uğur böceği |
+| **Ü** üzüm | **V** valiz | **Y** yıldız | **Z** zürafa |
+
+Nar emojisi Unicode'da olmadığı için o kart elle çizilmiş SVG'dir
+(`generate.py` içindeki `CUSTOM`). Ğ ile başlayan kelime olmadığından o kart
+"dağ" görseliyle temsil edilir.

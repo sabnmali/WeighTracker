@@ -25,9 +25,9 @@ TR = [
     ("A", "🍐", "armut"), ("B", "🎈", "balon"), ("C", "🐥", "civciv"),
     ("Ç", "🍓", "çilek"), ("D", "🐫", "deve"), ("E", "🐘", "el"),
     ("F", "🐠", "fil"), ("G", "🌹", "gül"), ("Ğ", "🏔", "dağ"),
-    ("H", "🐓", "horoz"), ("I", "💡", "ışık"), ("İ", "🐮", "inek"),
-    ("J", "✈", "jet"), ("K", "🐱", "kedi"), ("L", "🍋", "limon"),
-    ("M", "🍌", "muz"), ("N", "👵", "nine"), ("O", "🚌", "otobüs"),
+    ("H", "🐹", "hamster"), ("I", "💡", "ışık"), ("İ", "🐮", "inek"),
+    ("J", "👮", "jandarma"), ("K", "🐱", "kedi"), ("L", "🍋", "limon"),
+    ("M", "🍌", "muz"), ("N", "svg:nar", "nar"), ("O", "🚌", "otobüs"),
     ("Ö", "🦆", "ördek"), ("P", "🍊", "portakal"), ("R", "🤖", "robot"),
     ("S", "🥛", "süt"), ("Ş", "☂", "şemsiye"), ("T", "🐰", "tavşan"),
     ("U", "🐞", "uğur böceği"), ("Ü", "🍇", "üzüm"), ("V", "🧳", "valiz"),
@@ -37,10 +37,54 @@ TR = [
 TR[5] = ("E", "✋", "el")
 TR[6] = ("F", "🐘", "fil")
 
+# --- Elle çizilen görseller ---
+# Unicode'da nar emojisi yok; aynı düz/renkli emoji diliyle çizildi.
+# 100x100 kutu içinde, emoji glifleriyle aynı ölçeğe oturtulur.
+CUSTOM = {
+    "svg:nar": """
+  <path d="M40 27 L42.5 13 L47 20 L50 7 L53 20 L57.5 13 L60 27 Z"
+        fill="#93302a" stroke="#93302a" stroke-width="3"
+        stroke-linejoin="round"/>
+  <ellipse cx="50" cy="60" rx="41" ry="38" fill="#d3382d"/>
+  <path d="M50 22 a41 38 0 0 0 -41 38 a41 38 0 0 0 16 30
+           a46 46 0 0 1 14 -58 a44 44 0 0 1 11 -10 Z" fill="#e6604f"/>
+  <ellipse cx="27" cy="42" rx="8" ry="12" fill="#f4978a"
+           transform="rotate(-28 27 42)"/>
+  <circle cx="52" cy="62" r="25" fill="#fdeee6"/>
+  <circle cx="52" cy="62" r="25" fill="none" stroke="#f3cdba" stroke-width="2"/>
+  <g fill="#c92f26">
+    <circle cx="43" cy="54" r="5.8"/><circle cx="55" cy="51" r="5.8"/>
+    <circle cx="65" cy="58" r="5.8"/><circle cx="44" cy="66" r="5.8"/>
+    <circle cx="55" cy="63" r="5.8"/><circle cx="65" cy="70" r="5.8"/>
+    <circle cx="46" cy="77" r="5.8"/><circle cx="56" cy="75" r="5.8"/>
+  </g>
+  <g fill="#ffffff" opacity="0.55">
+    <circle cx="41" cy="52" r="1.7"/><circle cx="53" cy="49" r="1.7"/>
+    <circle cx="63" cy="56" r="1.7"/><circle cx="42" cy="64" r="1.7"/>
+    <circle cx="53" cy="61" r="1.7"/><circle cx="63" cy="68" r="1.7"/>
+    <circle cx="44" cy="75" r="1.7"/><circle cx="54" cy="73" r="1.7"/>
+  </g>
+  <ellipse cx="50" cy="60" rx="41" ry="38" fill="none"
+           stroke="#9a2b22" stroke-width="2.6"/>
+""",
+}
+
 # --- Flama geometrisi (mm) ---
 W, H, TIP = 92.0, 128.0, 30.0   # SVG birim: flama oranı
 CARD_W, CARD_H = 138.0, 192.0    # baskı boyutu (mm) - sayfa başına 2 flama
 SW = 1.4                        # çizgi kalınlığı
+
+
+def picture(emoji: str, band_bottom: float) -> str:
+    """Kartın görseli: emoji glifi ya da elle çizilmiş SVG."""
+    if emoji in CUSTOM:
+        size = 64.0                       # emoji gliflerinin kapladığı alanla aynı
+        x, y = W / 2 - size / 2, band_bottom + 3.0
+        k = size / 100
+        return (f'<g transform="translate({x:.2f} {y:.2f}) scale({k:.4f})">'
+                f'{CUSTOM[emoji]}</g>')
+    return (f'<text class="pic" x="{W / 2}" y="{band_bottom + 54}" '
+            f'text-anchor="middle">{emoji}</text>')
 
 
 def flag_svg(upper: str, emoji: str) -> str:
@@ -73,7 +117,7 @@ def flag_svg(upper: str, emoji: str) -> str:
     <line x1="0" y1="{band_y + band_h}" x2="{W}" y2="{band_y + band_h}" stroke="{BAND_EDGE}" stroke-width="0.4"/>
   </g>
   <text class="letter" x="{W / 2}" y="{band_y + band_h - 1.5}" text-anchor="middle">{label}</text>
-  <text class="pic" x="{W / 2}" y="{band_y + band_h + 54}" text-anchor="middle">{emoji}</text>
+  {picture(emoji, band_y + band_h)}
   <circle cx="{W * 0.18}" cy="9" r="2.2" fill="none" stroke="#c9c0ba" stroke-width="0.35" stroke-dasharray="1 1"/>
   <circle cx="{W * 0.82}" cy="9" r="2.2" fill="none" stroke="#c9c0ba" stroke-width="0.35" stroke-dasharray="1 1"/>
   <path d="{path}" fill="none" stroke="{INK}" stroke-width="{SW}" stroke-linejoin="round"/>
