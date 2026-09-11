@@ -23,25 +23,25 @@ BAND_EDGE = "#c7bbe2"
 # --- Harf listesi (Türkçe alfabe, 29 harf) ---
 TR = [
     ("A", "🍐", "armut"), ("B", "🎈", "balon"), ("C", "🐥", "civciv"),
-    ("Ç", "🍓", "çilek"), ("D", "🐫", "deve"), ("E", "🐘", "el"),
+    ("Ç", "🍓", "çilek"), ("D", "svg:deve", "deve"), ("E", "🐘", "el"),
     ("F", "🐠", "fil"), ("G", "🌹", "gül"), ("Ğ", "🏔", "dağ"),
     ("H", "🐹", "hamster"), ("I", "💡", "ışık"), ("İ", "🐮", "inek"),
-    ("J", "👮", "jandarma"), ("K", "🐱", "kedi"), ("L", "🍋", "limon"),
+    ("J", "svg:jandarma", "jandarma"), ("K", "🐱", "kedi"), ("L", "🍋", "limon"),
     ("M", "🍌", "muz"), ("N", "svg:nar", "nar"), ("O", "🚌", "otobüs"),
-    ("Ö", "🦆", "ördek"), ("P", "🍊", "portakal"), ("R", "🤖", "robot"),
+    ("Ö", "svg:ordek", "ördek"), ("P", "🍊", "portakal"), ("R", "🤖", "robot"),
     ("S", "🥛", "süt"), ("Ş", "☂", "şemsiye"), ("T", "🐰", "tavşan"),
     ("U", "🐞", "uğur böceği"), ("Ü", "🍇", "üzüm"), ("V", "🧳", "valiz"),
-    ("Y", "⭐", "yıldız"), ("Z", "🦒", "zürafa"),
+    ("Y", "⭐", "yıldız"), ("Z", "svg:zurafa", "zürafa"),
 ]
 # Türkçe listede görsel/harf uyumu: F=fil, E=el olacak şekilde düzeltilir
 TR[5] = ("E", "✋", "el")
-TR[6] = ("F", "🐘", "fil")
+TR[6] = ("F", "svg:fil", "fil")
 
 # --- Elle çizilen görseller ---
 # Unicode'da nar emojisi yok; aynı düz/renkli emoji diliyle çizildi.
 # 100x100 kutu içinde, emoji glifleriyle aynı ölçeğe oturtulur.
 CUSTOM = {
-    "svg:nar": """
+    "svg:nar": ((9, 4, 91, 98), """
   <path d="M40 27 L42.5 13 L47 20 L50 7 L53 20 L57.5 13 L60 27 Z"
         fill="#93302a" stroke="#93302a" stroke-width="3"
         stroke-linejoin="round"/>
@@ -66,7 +66,122 @@ CUSTOM = {
   </g>
   <ellipse cx="50" cy="60" rx="41" ry="38" fill="none"
            stroke="#9a2b22" stroke-width="2.6"/>
-""",
+"""),
+
+    # Emoji setindeki hayvanların sevimli yüzlü karşılığı olmadığı için
+    # kedi/inek/hamster gliflerinin diliyle (yuvarlak portre, iri gözler,
+    # pembe yanak) yeniden çizildi.
+    "svg:fil": ((2, 25, 98, 95), """
+  <ellipse cx="19" cy="44" rx="17" ry="19" fill="#9fabb3"/>
+  <ellipse cx="81" cy="44" rx="17" ry="19" fill="#9fabb3"/>
+  <ellipse cx="20" cy="45" rx="10" ry="12" fill="#c3a3a8"/>
+  <ellipse cx="80" cy="45" rx="10" ry="12" fill="#c3a3a8"/>
+  <ellipse cx="50" cy="48" rx="31" ry="30" fill="#aeb9c0"/>
+  <path d="M50 68 q-10 0 -10 11 l0 12 q0 9 9 9 q8 0 8 -8"
+        fill="none" stroke="#aeb9c0" stroke-width="15"
+        stroke-linecap="round" stroke-linejoin="round"/>
+  <ellipse cx="34" cy="63" rx="7" ry="5" fill="#f2a3ae" opacity="0.65"/>
+  <ellipse cx="66" cy="63" rx="7" ry="5" fill="#f2a3ae" opacity="0.65"/>
+  <circle cx="38" cy="46" r="5.4" fill="#2b2b2b"/>
+  <circle cx="62" cy="46" r="5.4" fill="#2b2b2b"/>
+  <circle cx="36.3" cy="44" r="1.9" fill="#ffffff"/>
+  <circle cx="60.3" cy="44" r="1.9" fill="#ffffff"/>
+  <path d="M20 30 q6 -7 13 -4 M80 30 q-6 -7 -13 -4" fill="none"
+        stroke="#8e9aa2" stroke-width="2.4" stroke-linecap="round"/>
+"""),
+
+    "svg:ordek": ((21, 2, 79, 89), """
+  <ellipse cx="50" cy="74" rx="29" ry="15" fill="#f7c948"/>
+  <path d="M50 10 q-4 -6 2 -8 q4 6 -2 8" fill="#f0a830"/>
+  <circle cx="50" cy="45" r="31" fill="#ffd84d"/>
+  <ellipse cx="34" cy="58" rx="7" ry="5" fill="#f7a8b0" opacity="0.7"/>
+  <ellipse cx="66" cy="58" rx="7" ry="5" fill="#f7a8b0" opacity="0.7"/>
+  <circle cx="39" cy="40" r="5.4" fill="#2b2b2b"/>
+  <circle cx="61" cy="40" r="5.4" fill="#2b2b2b"/>
+  <circle cx="37.3" cy="38" r="1.9" fill="#ffffff"/>
+  <circle cx="59.3" cy="38" r="1.9" fill="#ffffff"/>
+  <ellipse cx="50" cy="56" rx="16" ry="10" fill="#f5972e"/>
+  <path d="M36 56 q14 7 28 0" fill="none" stroke="#d97f1d"
+        stroke-width="2.2" stroke-linecap="round"/>
+"""),
+
+    "svg:zurafa": ((19, 1, 81, 86), """
+  <path d="M35 20 q-3 -12 3 -13 q6 1 4 13 Z" fill="#c98b32"/>
+  <path d="M65 20 q3 -12 -3 -13 q-6 1 -4 13 Z" fill="#c98b32"/>
+  <circle cx="36" cy="7" r="6" fill="#a9701f"/>
+  <circle cx="64" cy="7" r="6" fill="#a9701f"/>
+  <rect x="38" y="62" width="24" height="24" rx="11" fill="#f2b23e"/>
+  <ellipse cx="50" cy="45" rx="31" ry="29" fill="#ffc857"/>
+  <g fill="#d08f2b" opacity="0.85">
+    <ellipse cx="30" cy="30" rx="7" ry="6"/>
+    <ellipse cx="68" cy="28" rx="6.5" ry="5.5"/>
+    <ellipse cx="25" cy="50" rx="6" ry="6.5"/>
+    <ellipse cx="74" cy="49" rx="6" ry="6"/>
+    <ellipse cx="44" cy="80" rx="5.5" ry="5.5"/>
+    <ellipse cx="58" cy="73" rx="5.5" ry="5.5"/>
+  </g>
+  <ellipse cx="50" cy="57" rx="17" ry="13" fill="#ffe0a3"/>
+  <ellipse cx="31" cy="58" rx="6.5" ry="4.5" fill="#f79aa6" opacity="0.7"/>
+  <ellipse cx="69" cy="58" rx="6.5" ry="4.5" fill="#f79aa6" opacity="0.7"/>
+  <circle cx="39" cy="41" r="5.4" fill="#2b2b2b"/>
+  <circle cx="61" cy="41" r="5.4" fill="#2b2b2b"/>
+  <circle cx="37.3" cy="39" r="1.9" fill="#ffffff"/>
+  <circle cx="59.3" cy="39" r="1.9" fill="#ffffff"/>
+  <ellipse cx="44" cy="54" rx="2.4" ry="1.8" fill="#c98b32"/>
+  <ellipse cx="56" cy="54" rx="2.4" ry="1.8" fill="#c98b32"/>
+  <path d="M43 61 q7 6 14 0" fill="none" stroke="#c98b32"
+        stroke-width="2.4" stroke-linecap="round"/>
+"""),
+
+    "svg:deve": ((4, 6, 92, 96), """
+  <g fill="#e3a968">
+    <rect x="36" y="72" width="11" height="24" rx="5.5"/>
+    <rect x="52" y="74" width="11" height="22" rx="5.5"/>
+    <rect x="70" y="72" width="11" height="24" rx="5.5"/>
+  </g>
+  <path d="M30 66 C30 40 46 38 49 60 C53 34 74 34 84 64 Z" fill="#e8b478"/>
+  <ellipse cx="57" cy="66" rx="29" ry="19" fill="#e8b478"/>
+  <path d="M34 64 q-10 -20 -8 -34" fill="none" stroke="#e8b478"
+        stroke-width="17" stroke-linecap="round"/>
+  <path d="M88 58 q8 4 4 14" fill="none" stroke="#d79857"
+        stroke-width="4" stroke-linecap="round"/>
+  <ellipse cx="24" cy="25" rx="16" ry="13" fill="#f0c48c"/>
+  <ellipse cx="12" cy="31" rx="10" ry="8" fill="#f8dcb4"/>
+  <path d="M32 14 q5 -8 9 -1 q-3 5 -8 5 Z" fill="#d79857"/>
+  <circle cx="9" cy="29" r="1.7" fill="#b9803f"/>
+  <path d="M7 35 q6 4 11 -1" fill="none" stroke="#c0894a"
+        stroke-width="2" stroke-linecap="round"/>
+  <ellipse cx="30" cy="32" rx="6" ry="4.5" fill="#f79aa6" opacity="0.6"/>
+  <circle cx="25" cy="22" r="5" fill="#2b2b2b"/>
+  <circle cx="23.4" cy="20.3" r="1.8" fill="#ffffff"/>
+  <path d="M19 14 q3 -4 6 -2 M26 12 q3 -3 6 0" fill="none"
+        stroke="#2b2b2b" stroke-width="1.8" stroke-linecap="round"/>
+"""),
+
+    # Jandarma: polis mavisi yerine haki üniforma ve kırmızı-sarı arma.
+    "svg:jandarma": ((14, 16, 86, 96), """
+  <circle cx="50" cy="46" r="27" fill="#f7c77a"/>
+  <path d="M18 96 q2 -24 32 -24 q30 0 32 24 Z" fill="#6e7a4f"/>
+  <path d="M38 73 q12 12 24 0 l6 3 -18 12 -18 -12 Z" fill="#8b9668"/>
+  <path d="M50 72 l-6 6 6 6 6 -6 Z" fill="#c0392b"/>
+  <path d="M20 30 q30 -20 60 0 q2 6 -4 6 l-52 0 q-6 0 -4 -6 Z"
+        fill="#5f6b45"/>
+  <path d="M14 36 q36 -8 72 0 q2 7 -6 7 l-60 0 q-8 0 -6 -7 Z"
+        fill="#4b553a"/>
+  <rect x="30" y="26" width="40" height="9" rx="4" fill="#c0392b"/>
+  <circle cx="50" cy="24" r="7.5" fill="#c0392b"/>
+  <path d="M52 19.5 a5 5 0 1 0 0 9 a4 4 0 1 1 0 -9 Z" fill="#ffffff"/>
+  <path d="M56.5 21.4 l.8 1.9 2 .2 -1.5 1.4 .4 2 -1.7 -1 -1.7 1
+           .4 -2 -1.5 -1.4 2 -.2 Z" fill="#ffffff"/>
+  <ellipse cx="33" cy="56" rx="6.5" ry="4.5" fill="#f2918f" opacity="0.6"/>
+  <ellipse cx="67" cy="56" rx="6.5" ry="4.5" fill="#f2918f" opacity="0.6"/>
+  <circle cx="40" cy="49" r="4.8" fill="#2b2b2b"/>
+  <circle cx="60" cy="49" r="4.8" fill="#2b2b2b"/>
+  <circle cx="38.4" cy="47.3" r="1.7" fill="#ffffff"/>
+  <circle cx="58.4" cy="47.3" r="1.7" fill="#ffffff"/>
+  <path d="M43 60 q7 6 14 0" fill="none" stroke="#b9763c"
+        stroke-width="2.6" stroke-linecap="round"/>
+"""),
 }
 
 # --- Flama geometrisi (mm) ---
@@ -78,11 +193,14 @@ SW = 1.4                        # çizgi kalınlığı
 def picture(emoji: str, band_bottom: float) -> str:
     """Kartın görseli: emoji glifi ya da elle çizilmiş SVG."""
     if emoji in CUSTOM:
-        size = 64.0                       # emoji gliflerinin kapladığı alanla aynı
-        x, y = W / 2 - size / 2, band_bottom + 3.0
-        k = size / 100
-        return (f'<g transform="translate({x:.2f} {y:.2f}) scale({k:.4f})">'
-                f'{CUSTOM[emoji]}</g>')
+        (x0, y0, x1, y1), art = CUSTOM[emoji]
+        # Emoji glifleriyle aynı kutuya oturt: üst kenar şeridin hemen altı,
+        # yükseklik 60 birim, genişlik en fazla 68 birim.
+        k = min(60.0 / (y1 - y0), 68.0 / (x1 - x0))
+        tx = W / 2 - (x0 + x1) / 2 * k
+        ty = band_bottom + 1.0 - y0 * k
+        return (f'<g transform="translate({tx:.2f} {ty:.2f}) scale({k:.4f})">'
+                f'{art}</g>')
     return (f'<text class="pic" x="{W / 2}" y="{band_bottom + 54}" '
             f'text-anchor="middle">{emoji}</text>')
 
