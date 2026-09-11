@@ -41,13 +41,13 @@ listesini düzenlemek yeterli.
 |  |  |  |  |  |
 |---|---|---|---|---|
 | **A** armut | **B** balon | **C** civciv | **Ç** çilek | **D** deve |
-| **E** el | **F** fil | **G** gül | **Ğ** dağ | **H** hamster |
+| **E** el | **F** fil | **G** gül | **Ğ** dağ | **H** horoz |
 | **I** ışık | **İ** inek | **J** jandarma | **K** kedi | **L** limon |
 | **M** muz | **N** nar | **O** otobüs | **Ö** ördek | **P** portakal |
 | **R** robot | **S** süt | **Ş** şemsiye | **T** tavşan | **U** uğur böceği |
 | **Ü** üzüm | **V** valiz | **Y** yıldız | **Z** zürafa |
 
-Kartların 12 tanesi elle çizilmiş SVG'dir (`generate.py` içindeki
-`CUSTOM`): tüm hayvanlar, jandarma ve nar. Emoji setinde ya karşılığı yok
+Kartların 11 tanesi elle çizilmiş SVG'dir (`generate.py` içindeki
+`CUSTOM`): hayvanların çoğu, jandarma ve nar. Emoji setinde ya karşılığı yok
 (nar) ya da çizimleri yeterince sevimli değildi. Ğ ile başlayan kelime olmadığından o kart
 "dağ" görseliyle temsil edilir.
