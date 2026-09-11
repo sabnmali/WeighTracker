@@ -26,7 +26,7 @@ TR = [
     ("Ç", "🍓", "çilek"), ("D", "svg:deve", "deve"), ("E", "🐘", "el"),
     ("F", "🐠", "fil"), ("G", "🌹", "gül"), ("Ğ", "🏔", "dağ"),
     ("H", "svg:hamster", "hamster"), ("I", "💡", "ışık"), ("İ", "svg:inek", "inek"),
-    ("J", "svg:jandarma", "jandarma"), ("K", "🐱", "kedi"), ("L", "🍋", "limon"),
+    ("J", "svg:jandarma", "jandarma"), ("K", "svg:kedi", "kedi"), ("L", "🍋", "limon"),
     ("M", "🍌", "muz"), ("N", "svg:nar", "nar"), ("O", "🚌", "otobüs"),
     ("Ö", "svg:ordek", "ördek"), ("P", "🍊", "portakal"), ("R", "🤖", "robot"),
     ("S", "🥛", "süt"), ("Ş", "☂", "şemsiye"), ("T", "svg:tavsan", "tavşan"),
@@ -156,6 +156,33 @@ CUSTOM = {
   <circle cx="23.4" cy="20.3" r="1.8" fill="#ffffff"/>
   <path d="M19 14 q3 -4 6 -2 M26 12 q3 -3 6 0" fill="none"
         stroke="#2b2b2b" stroke-width="1.8" stroke-linecap="round"/>
+"""),
+
+    "svg:kedi": ((6, 4, 94, 92), """
+  <path d="M15 44 L14 6 L48 28 Z" fill="#f6a93b" stroke="#f6a93b"
+        stroke-width="7" stroke-linejoin="round"/>
+  <path d="M85 44 L86 6 L52 28 Z" fill="#f6a93b" stroke="#f6a93b"
+        stroke-width="7" stroke-linejoin="round"/>
+  <path d="M22 34 L21 15 L39 27 Z" fill="#f7b9bf" stroke="#f7b9bf"
+        stroke-width="5" stroke-linejoin="round"/>
+  <path d="M78 34 L79 15 L61 27 Z" fill="#f7b9bf" stroke="#f7b9bf"
+        stroke-width="5" stroke-linejoin="round"/>
+  <ellipse cx="50" cy="56" rx="40" ry="35" fill="#ffc44d"/>
+  <g fill="none" stroke="#f0952e" stroke-width="4.6" stroke-linecap="round">
+    <path d="M41 32 q1 7 0 11"/><path d="M50 30 q1 8 0 12"/>
+    <path d="M59 32 q-1 7 0 11"/>
+  </g>
+  <ellipse cx="18" cy="62" rx="8" ry="6" fill="#f5828f" opacity="0.75"/>
+  <ellipse cx="82" cy="62" rx="8" ry="6" fill="#f5828f" opacity="0.75"/>
+  <circle cx="34" cy="53" r="7.4" fill="#2b2b2b"/>
+  <circle cx="66" cy="53" r="7.4" fill="#2b2b2b"/>
+  <circle cx="31.5" cy="50.2" r="2.7" fill="#ffffff"/>
+  <circle cx="63.5" cy="50.2" r="2.7" fill="#ffffff"/>
+  <path d="M44 66 L56 66 L50 72 Z" fill="#f07f8e"/>
+  <path d="M50 72 q-8 9 -15 1 M50 72 q8 9 15 1" fill="none"
+        stroke="#c9702c" stroke-width="3" stroke-linecap="round"/>
+  <path d="M12 56 l-11 -5 M12 64 l-11 4 M88 56 l11 -5 M88 64 l11 4"
+        fill="none" stroke="#e8b184" stroke-width="2.2" stroke-linecap="round"/>
 """),
 
     "svg:civciv": ((10, 4, 90, 96), """

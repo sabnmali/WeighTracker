@@ -47,6 +47,7 @@ listesini düzenlemek yeterli.
 | **R** robot | **S** süt | **Ş** şemsiye | **T** tavşan | **U** uğur böceği |
 | **Ü** üzüm | **V** valiz | **Y** yıldız | **Z** zürafa |
 
-Nar emojisi Unicode'da olmadığı için o kart elle çizilmiş SVG'dir
-(`generate.py` içindeki `CUSTOM`). Ğ ile başlayan kelime olmadığından o kart
+Kartların 12 tanesi elle çizilmiş SVG'dir (`generate.py` içindeki
+`CUSTOM`): tüm hayvanlar, jandarma ve nar. Emoji setinde ya karşılığı yok
+(nar) ya da çizimleri yeterince sevimli değildi. Ğ ile başlayan kelime olmadığından o kart
 "dağ" görseliyle temsil edilir.
