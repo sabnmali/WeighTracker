@@ -22,15 +22,15 @@ BAND_EDGE = "#c7bbe2"
 
 # --- Harf listesi (Türkçe alfabe, 29 harf) ---
 TR = [
-    ("A", "🍐", "armut"), ("B", "🎈", "balon"), ("C", "🐥", "civciv"),
+    ("A", "🍐", "armut"), ("B", "🎈", "balon"), ("C", "svg:civciv", "civciv"),
     ("Ç", "🍓", "çilek"), ("D", "svg:deve", "deve"), ("E", "🐘", "el"),
     ("F", "🐠", "fil"), ("G", "🌹", "gül"), ("Ğ", "🏔", "dağ"),
-    ("H", "🐹", "hamster"), ("I", "💡", "ışık"), ("İ", "🐮", "inek"),
+    ("H", "svg:hamster", "hamster"), ("I", "💡", "ışık"), ("İ", "svg:inek", "inek"),
     ("J", "svg:jandarma", "jandarma"), ("K", "🐱", "kedi"), ("L", "🍋", "limon"),
     ("M", "🍌", "muz"), ("N", "svg:nar", "nar"), ("O", "🚌", "otobüs"),
     ("Ö", "svg:ordek", "ördek"), ("P", "🍊", "portakal"), ("R", "🤖", "robot"),
-    ("S", "🥛", "süt"), ("Ş", "☂", "şemsiye"), ("T", "🐰", "tavşan"),
-    ("U", "🐞", "uğur böceği"), ("Ü", "🍇", "üzüm"), ("V", "🧳", "valiz"),
+    ("S", "🥛", "süt"), ("Ş", "☂", "şemsiye"), ("T", "svg:tavsan", "tavşan"),
+    ("U", "svg:ugurbocegi", "uğur böceği"), ("Ü", "🍇", "üzüm"), ("V", "🧳", "valiz"),
     ("Y", "⭐", "yıldız"), ("Z", "svg:zurafa", "zürafa"),
 ]
 # Türkçe listede görsel/harf uyumu: F=fil, E=el olacak şekilde düzeltilir
@@ -158,7 +158,122 @@ CUSTOM = {
         stroke="#2b2b2b" stroke-width="1.8" stroke-linecap="round"/>
 """),
 
+    "svg:civciv": ((10, 4, 90, 96), """
+  <path d="M52 22 q-12 -6 -6 -14 q1 6 8 8 q-6 -9 2 -12
+           q0 8 6 11 q4 5 -2 8 Z" fill="#f0a830"/>
+  <ellipse cx="50" cy="56" rx="34" ry="35" fill="#ffd84d"/>
+  <ellipse cx="19" cy="60" rx="10" ry="15" fill="#f7c948"
+           transform="rotate(12 19 60)"/>
+  <ellipse cx="81" cy="60" rx="10" ry="15" fill="#f7c948"
+           transform="rotate(-12 81 60)"/>
+  <g fill="#f5972e">
+    <path d="M40 88 l-6 8 M40 88 l0 9 M40 88 l6 8" stroke="#f5972e"
+          stroke-width="3.4" stroke-linecap="round" fill="none"/>
+    <path d="M60 88 l-6 8 M60 88 l0 9 M60 88 l6 8" stroke="#f5972e"
+          stroke-width="3.4" stroke-linecap="round" fill="none"/>
+  </g>
+  <ellipse cx="29" cy="66" rx="7.5" ry="5.5" fill="#f7929c" opacity="0.75"/>
+  <ellipse cx="71" cy="66" rx="7.5" ry="5.5" fill="#f7929c" opacity="0.75"/>
+  <circle cx="38" cy="50" r="6.4" fill="#2b2b2b"/>
+  <circle cx="62" cy="50" r="6.4" fill="#2b2b2b"/>
+  <circle cx="36" cy="47.6" r="2.3" fill="#ffffff"/>
+  <circle cx="60" cy="47.6" r="2.3" fill="#ffffff"/>
+  <path d="M42 62 L50 56 L58 62 L50 69 Z" fill="#f5972e"/>
+  <path d="M42 62 L58 62" stroke="#dd7f1c" stroke-width="1.6"/>
+"""),
+
+    "svg:hamster": ((6, 6, 94, 92), """
+  <circle cx="22" cy="24" r="14" fill="#e39a55"/>
+  <circle cx="78" cy="24" r="14" fill="#e39a55"/>
+  <circle cx="22" cy="25" r="8" fill="#f2a6b4"/>
+  <circle cx="78" cy="25" r="8" fill="#f2a6b4"/>
+  <ellipse cx="50" cy="52" rx="44" ry="39" fill="#f0ad67"/>
+  <ellipse cx="50" cy="62" rx="33" ry="27" fill="#fbe3c6"/>
+  <ellipse cx="50" cy="34" rx="22" ry="12" fill="#fbe3c6" opacity="0.55"/>
+  <ellipse cx="17" cy="62" rx="8" ry="6" fill="#f5949f" opacity="0.8"/>
+  <ellipse cx="83" cy="62" rx="8" ry="6" fill="#f5949f" opacity="0.8"/>
+  <circle cx="34" cy="48" r="6.6" fill="#2b2b2b"/>
+  <circle cx="66" cy="48" r="6.6" fill="#2b2b2b"/>
+  <circle cx="31.8" cy="45.5" r="2.4" fill="#ffffff"/>
+  <circle cx="63.8" cy="45.5" r="2.4" fill="#ffffff"/>
+  <ellipse cx="50" cy="62" rx="5" ry="3.6" fill="#8a5a33"/>
+  <path d="M50 66 q-7 8 -13 1 M50 66 q7 8 13 1" fill="none"
+        stroke="#8a5a33" stroke-width="2.8" stroke-linecap="round"/>
+  <path d="M14 54 l-12 -4 M14 62 l-13 2 M86 54 l12 -4 M86 62 l13 2"
+        fill="none" stroke="#d9a273" stroke-width="2" stroke-linecap="round"/>
+"""),
+
+    "svg:inek": ((4, 5, 96, 94), """
+  <ellipse cx="14" cy="44" rx="14" ry="10" fill="#d8dade"
+           transform="rotate(-18 14 44)"/>
+  <ellipse cx="86" cy="44" rx="14" ry="10" fill="#d8dade"
+           transform="rotate(18 86 44)"/>
+  <path d="M26 20 q-8 -12 2 -14 q7 2 6 13 Z" fill="#e8d3a8"/>
+  <path d="M74 20 q8 -12 -2 -14 q-7 2 -6 13 Z" fill="#e8d3a8"/>
+  <ellipse cx="50" cy="50" rx="38" ry="34" fill="#f7f7f7"/>
+  <path d="M24 30 q10 -10 20 -2 q-6 10 -20 9 Z" fill="#8f9398"/>
+  <ellipse cx="74" cy="34" rx="12" ry="9" fill="#8f9398"
+           transform="rotate(18 74 34)"/>
+  <ellipse cx="50" cy="70" rx="26" ry="19" fill="#f7b9c4"/>
+  <ellipse cx="40" cy="68" rx="4" ry="5" fill="#e08b9c"/>
+  <ellipse cx="60" cy="68" rx="4" ry="5" fill="#e08b9c"/>
+  <path d="M40 79 q10 7 20 0" fill="none" stroke="#e08b9c"
+        stroke-width="2.6" stroke-linecap="round"/>
+  <ellipse cx="20" cy="60" rx="7" ry="5" fill="#f5949f" opacity="0.7"/>
+  <ellipse cx="80" cy="60" rx="7" ry="5" fill="#f5949f" opacity="0.7"/>
+  <circle cx="35" cy="47" r="6.4" fill="#2b2b2b"/>
+  <circle cx="65" cy="47" r="6.4" fill="#2b2b2b"/>
+  <circle cx="32.8" cy="44.6" r="2.3" fill="#ffffff"/>
+  <circle cx="62.8" cy="44.6" r="2.3" fill="#ffffff"/>
+"""),
+
+    "svg:tavsan": ((10, 2, 90, 94), """
+  <ellipse cx="34" cy="26" rx="11" ry="24" fill="#eff0f4"
+           transform="rotate(-9 34 26)"/>
+  <ellipse cx="66" cy="26" rx="11" ry="24" fill="#eff0f4"
+           transform="rotate(9 66 26)"/>
+  <ellipse cx="34" cy="27" rx="6" ry="17" fill="#f7b3bd"
+           transform="rotate(-9 34 27)"/>
+  <ellipse cx="66" cy="27" rx="6" ry="17" fill="#f7b3bd"
+           transform="rotate(9 66 27)"/>
+  <ellipse cx="50" cy="63" rx="36" ry="31" fill="#f7f8fb"/>
+  <ellipse cx="19" cy="70" rx="8" ry="6" fill="#f7949f" opacity="0.8"/>
+  <ellipse cx="81" cy="70" rx="8" ry="6" fill="#f7949f" opacity="0.8"/>
+  <circle cx="36" cy="58" r="6.6" fill="#2b2b2b"/>
+  <circle cx="64" cy="58" r="6.6" fill="#2b2b2b"/>
+  <circle cx="33.8" cy="55.5" r="2.4" fill="#ffffff"/>
+  <circle cx="61.8" cy="55.5" r="2.4" fill="#ffffff"/>
+  <path d="M45 70 L55 70 L50 76 Z" fill="#f38ba0"/>
+  <path d="M50 76 q-7 8 -13 1 M50 76 q7 8 13 1" fill="none"
+        stroke="#cf7c8c" stroke-width="2.8" stroke-linecap="round"/>
+  <path d="M16 64 l-13 -3 M16 72 l-13 3 M84 64 l13 -3 M84 72 l13 3"
+        fill="none" stroke="#cfd3dc" stroke-width="2" stroke-linecap="round"/>
+"""),
+
     # Jandarma: polis mavisi yerine haki üniforma ve kırmızı-sarı arma.
+    "svg:ugurbocegi": ((14, 8, 86, 94), """
+  <path d="M50 22 q-11 -5 -14 -11 M50 22 q11 -5 14 -11" fill="none"
+        stroke="#2b2b2b" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="34" cy="9" r="4.5" fill="#2b2b2b"/>
+  <circle cx="66" cy="9" r="4.5" fill="#2b2b2b"/>
+  <circle cx="50" cy="58" r="36" fill="#e0443a"/>
+  <g fill="#2b2b2b">
+    <circle cx="28" cy="63" r="7.5"/><circle cx="72" cy="63" r="7.5"/>
+    <circle cx="37" cy="83" r="6"/><circle cx="63" cy="83" r="6"/>
+  </g>
+  <path d="M50 24 q-1 0 -1 68" stroke="#a82a22" stroke-width="2.4" fill="none"/>
+  <path d="M50 55 a27 27 0 0 1 -27 -27 a27 27 0 0 1 54 0 a27 27 0 0 1 -27 27 Z"
+        fill="#2b2b2b"/>
+  <ellipse cx="28" cy="36" rx="6.5" ry="4.5" fill="#f5949f" opacity="0.75"/>
+  <ellipse cx="72" cy="36" rx="6.5" ry="4.5" fill="#f5949f" opacity="0.75"/>
+  <circle cx="39" cy="28" r="7" fill="#ffffff"/>
+  <circle cx="61" cy="28" r="7" fill="#ffffff"/>
+  <circle cx="40" cy="29" r="3.6" fill="#2b2b2b"/>
+  <circle cx="62" cy="29" r="3.6" fill="#2b2b2b"/>
+  <path d="M43 40 q7 6 14 0" fill="none" stroke="#ffffff"
+        stroke-width="2.6" stroke-linecap="round"/>
+"""),
+
     "svg:jandarma": ((14, 16, 86, 96), """
   <circle cx="50" cy="46" r="27" fill="#f7c77a"/>
   <path d="M18 96 q2 -24 32 -24 q30 0 32 24 Z" fill="#6e7a4f"/>
