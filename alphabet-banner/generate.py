@@ -30,11 +30,11 @@ TR = [
     ("M", "🍌", "muz"), ("N", "👵", "nine"), ("O", "🚌", "otobüs"),
     ("Ö", "🦆", "ördek"), ("P", "🍊", "portakal"), ("R", "🤖", "robot"),
     ("S", "🥛", "süt"), ("Ş", "☂", "şemsiye"), ("T", "🐰", "tavşan"),
-    ("U", "🐞", "uğur böceği"), ("Ü", "🍇", "üzüm"), ("V", "⛴", "vapur"),
+    ("U", "🐞", "uğur böceği"), ("Ü", "🍇", "üzüm"), ("V", "🧳", "valiz"),
     ("Y", "⭐", "yıldız"), ("Z", "🦒", "zürafa"),
 ]
 # Türkçe listede görsel/harf uyumu: F=fil, E=el olacak şekilde düzeltilir
-TR[5] = ("E", "🤚", "el")
+TR[5] = ("E", "✋", "el")
 TR[6] = ("F", "🐘", "fil")
 
 # --- Flama geometrisi (mm) ---
