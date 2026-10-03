@@ -1,0 +1,232 @@
+@import 'tailwindcss';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-brand-50: #eef3f9;
+  --color-brand-100: #d6e2f0;
+  --color-brand-200: #adc5e0;
+  --color-brand-300: #7fa2cb;
+  --color-brand-400: #5480b3;
+  --color-brand-500: #35639a;
+  --color-brand-600: #284f7d;
+  --color-brand-700: #1e3a5f;
+  --color-brand-800: #172d4a;
+  --color-brand-900: #0f1f33;
+  --color-paper: #f5f2ea;
+  --color-paper-dark: #ece6d6;
+  --color-gold-100: #f7eed8;
+  --color-gold-500: #c8962e;
+  --color-gold-700: #8f6a1d;
+  --font-type: 'Cutive Mono', 'serif-monospace', 'Courier New', Courier, monospace;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--color-paper);
+  color: #1f2937;
+  font-family:
+    system-ui,
+    -apple-system,
+    'Segoe UI',
+    Roboto,
+    'Noto Sans',
+    sans-serif;
+  -webkit-tap-highlight-color: transparent;
+  overscroll-behavior: none;
+}
+
+.dark body,
+body.dark {
+  background: #0b1220;
+  color: #e5e7eb;
+}
+
+button {
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+
+.safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  scrollbar-width: none;
+}
+
+/* 3B kart çevirme */
+.flip-scene {
+  perspective: 1200px;
+}
+.flip-card {
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.55s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.flip-card.flipped {
+  transform: rotateY(180deg);
+}
+.flip-face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+.flip-back {
+  transform: rotateY(180deg);
+}
+
+@keyframes pop-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.animate-pop {
+  animation: pop-in 0.22s ease-out both;
+}
+
+@keyframes slide-up {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: none;
+  }
+}
+.animate-sheet {
+  animation: slide-up 0.25s ease-out both;
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: none;
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  75% {
+    transform: translateX(5px);
+  }
+}
+.animate-shake {
+  animation: shake 0.3s ease-in-out;
+}
+
+/* Daktilo çalışma kağıdı */
+.typewriter {
+  font-family: var(--font-type);
+  background:
+    repeating-linear-gradient(to bottom, transparent 0, transparent 27px, rgba(30, 58, 95, 0.07) 28px),
+    #fffdf6;
+  color: #1b1b1b;
+  line-height: 28px;
+  font-size: 15px;
+}
+.typewriter h2 {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  border-bottom: 2px solid #1b1b1b;
+  margin: 0 0 8px;
+  padding-bottom: 4px;
+}
+.typewriter h3 {
+  font-size: 17px;
+  font-weight: 700;
+  margin: 22px 0 6px;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.typewriter h4 {
+  font-weight: 700;
+  margin: 14px 0 4px;
+}
+.typewriter p {
+  margin: 4px 0;
+}
+.typewriter ol {
+  list-style: decimal;
+  padding-left: 26px;
+  margin: 4px 0;
+}
+.typewriter ul {
+  list-style: disc;
+  padding-left: 22px;
+  margin: 4px 0;
+}
+.typewriter li {
+  margin: 4px 0;
+  word-break: break-word;
+}
+.typewriter table {
+  border-collapse: collapse;
+}
+.typewriter td,
+.typewriter th {
+  border: 1px solid #444;
+  padding: 2px 6px;
+}
+
+@media print {
+  @page {
+    size: A4;
+    margin: 14mm;
+  }
+  body,
+  .dark body {
+    background: #fff !important;
+  }
+  .no-print {
+    display: none !important;
+  }
+  .print-only {
+    display: block !important;
+  }
+  .print-area {
+    box-shadow: none !important;
+    border: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    max-width: none !important;
+  }
+  .typewriter {
+    background: #fff !important;
+    font-size: 12pt;
+    line-height: 1.55;
+  }
+  .typewriter h3 {
+    break-after: avoid;
+  }
+  .typewriter li {
+    break-inside: avoid;
+  }
+  #app-shell {
+    height: auto !important;
+    overflow: visible !important;
+  }
+  #app-main {
+    overflow: visible !important;
+    padding: 0 !important;
+  }
+}
