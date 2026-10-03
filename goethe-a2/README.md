@@ -1,4 +1,4 @@
-# Goethe A2 Trainer (v3.0.0)
+# Goethe A2 Trainer (v3.1.0)
 
 Goethe-Zertifikat A2 sınavına hazırlık için **çevrimdışı çalışan** Android uygulaması. Orijinal Google AI Studio projesinin spesifikasyonu (`docs/ORIGINAL_SPEC.md`) ve Goethe A2 kelime listesi (`data/goethe_a2_wortliste_turkce.json`) temel alınarak yeniden yazıldı ve geliştirildi.
 
@@ -22,6 +22,26 @@ APK kurulumu: dosyayı telefona at → aç → "Bilinmeyen kaynaklardan yükleme
 - **Günlük çalışma kağıdı:** 5 bölüm (Wortschatz & Artikel, Lückentext, Übersetzung, Satzbau, 180–250 kelimelik Lesetext). Daktilo görünümü, A4 yazdırma / PDF kaydetme; cevap anahtarı yazdırılmaz.
 - **Ayarlar:** Sınav tarihi geri sayımı, günlük hedef, koyu tema, TTS hızı, JSON yedekleme (birleştirme destekli), sıfırlama.
 
+## Çevrimdışı + bulut eşitleme (Firebase)
+
+Uygulama her zaman internetsiz çalışır. Ayarlar → **Bulut eşitleme** bölümünden ücretsiz bir Firebase projesine bağlanıp e-posta/şifre ile giriş yapılırsa, internet olduğunda şu veriler tüm cihazlarda otomatik eşitlenir:
+
+- kelime ilerlemesi (Leitner kutuları, doğru/yanlış sayıları), kural bazlı hata istatistikleri
+- hata defteri (yanlış sorular), sınav sonuçları ve raporları, yazma denemeleri
+- yer imleri, notlar, çalışma kağıdı listesi, günlük istatistikler, ayarlar (Gemini anahtarı dahil)
+
+Eşitleme değişiklikten ~3 sn sonra, uygulama öne geldiğinde, internet geri geldiğinde ve açıkken 45 sn'de bir çalışır. Sınav ve kart seçimi her zaman birleşmiş veriye göre yapılır: telefonda yanlış yapılan soru tablette de öncelikli gelir.
+
+Birleştirme üç yönlüdür (yerel / bulut / son ortak durum): iki cihazda çevrimdışı yapılan çalışmalar toplanır, bir cihazda silinen kayıt diğerinde de silinir, iki cihaz aynı anda yazarsa sürüm kontrolüyle yeniden denenir. Başlıktaki bulut simgesi durumu gösterir.
+
+**Kurulum (bir kez, ~5 dk, arkadaşının Google hesabıyla):** Uygulamada Ayarlar → Bulut eşitleme → „Firebase kurulum rehberi“ adım adım anlatır: proje oluştur → Authentication'da E-posta/Şifre'yi aç → Firestore veritabanı oluştur → güvenlik kurallarını yapıştır → web uygulaması ekleyip `firebaseConfig` bloğunu uygulamaya yapıştır → hesap oluştur. Diğer cihazlarda „Kurulum kodu“ yapıştırılıp aynı e-postayla giriş yapılır. Ücretsiz Spark planı bu kullanım için fazlasıyla yeterli.
+
+Firestore'da veri yapısı: `users/{uid}/state/main`, `users/{uid}/state/mistakes`, `users/{uid}/tests/{id}`, `users/{uid}/writings/{id}`. Kurallar her kullanıcının yalnızca kendi verisine erişmesine izin verir.
+
+## İçerik ve sürüm güncellemeleri
+
+Uygulama açılışta, internet geldiğinde ve 6 saatte bir `content/content.json` dosyasını GitHub'dan okur. Bu dosyaya yeni kelime, soru, okuma metni, yazma görevi eklenebilir veya hatalı soru kaldırılabilir; yeni APK gerekmez. `app.latestVersion` alanı yükseltildiğinde ana sayfada „Yeni sürüm“ kartı ve indirme düğmesi çıkar. Ayrıntılar: `content/README.md`.
+
 ## Yapay zeka (isteğe bağlı)
 
 Uygulama API anahtarı olmadan tamamen çalışır. Ayarlar'a bir **Google Gemini API anahtarı** girilirse AI sınav üretimi, yazma puanlaması, kural detaylandırma, AI çalışma kağıdı ve hafıza çengelleri açılır. Varsayılan model `gemini-2.5-flash`; Google model adını değiştirirse Ayarlar'dan güncellenebilir.
@@ -29,7 +49,7 @@ Uygulama API anahtarı olmadan tamamen çalışır. Ayarlar'a bir **Google Gemin
 ## Orijinal projeye göre değişiklikler
 
 - Uygulama tamamen yerel ve çevrimdışı çalışıyor; sunucu (Express) gerekmiyor.
-- **Firebase bulut senkronizasyonu kaldırıldı**, yerine dosya tabanlı yedek + akıllı birleştirme geldi. Firebase, proje ayarları ve hesap gerektirdiği için tek başına çalışan bir APK'ya uygun değildi.
+- Firebase eşitlemesi SDK yerine REST API ile yeniden yazıldı: çevrimdışı öncelikli, üç yönlü birleştirme, sürüm koşullu yazma. Firebase yapılandırması uygulama içinden girilir (yeniden derleme gerekmez). Dosya ile yedekleme de duruyor.
 - Seslendirme Android'in kendi TTS motoruyla yapılıyor (WebView'de Web Speech API güvenilir çalışmadığı için). Ses gelmezse: Ayarlar → Seslendirme → "Ses paketini yükle".
 - Leitner aralıklı tekrar, günlük hedef/seri, sınav geri sayımı, koyu tema, kendi kelimeni ekleme, kural bazlı hata istatistikleri eklendi.
 - Yazma görevlerinde kelime aralıkları resmî Goethe A2 formatına göre düzeltildi (Teil 1: 20–30, Teil 2: 30–40).
@@ -41,6 +61,7 @@ Uygulama API anahtarı olmadan tamamen çalışır. Ayarlar'a bir **Google Gemin
 # Web arayüzü
 cd web && npm install && npm run build      # dist/index.html (tek dosya)
 npx tsx tests/validate.ts                   # soru bankası doğrulaması
+npx tsx tests/merge.test.ts                 # eşitleme birleştirme testleri
 
 # Kelime verisini yeniden üretmek için
 python3 scripts/prepare_words.py

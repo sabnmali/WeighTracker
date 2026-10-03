@@ -239,7 +239,25 @@ public class MainActivity extends Activity {
 
         @JavascriptInterface
         public String getAppVersion() {
-            return "3.0.0";
+            try {
+                return getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
+            } catch (Exception e) {
+                return "3.1.0";
+            }
+        }
+
+        @JavascriptInterface
+        public void openUrl(final String url) {
+            mainHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+                    } catch (Exception e) {
+                        Toast.makeText(MainActivity.this, "Bağlantı açılamadı", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
         }
 
         @JavascriptInterface
@@ -364,6 +382,7 @@ public class MainActivity extends Activity {
                     try {
                         conn = (HttpURLConnection) new URL(url).openConnection();
                         conn.setRequestMethod(method);
+                        conn.setUseCaches(false);
                         conn.setConnectTimeout(20000);
                         conn.setReadTimeout(120000);
                         if (headersJson != null && headersJson.length() > 0) {

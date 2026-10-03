@@ -417,8 +417,8 @@ Nach dem Kurs gehe ich oft mit Ana aus Brasilien in die Bibliothek. Wir machen z
 ];
 
 /** Uzun metinlerin sorularını sınav motoru için Question’a çevirir. */
-export const LONG_READING_QUESTIONS: Question[] = LONG_TEXTS.flatMap((t) =>
-  t.questions.map((q, i) => ({
+export function longTextQuestions(t: LongText): Question[] {
+  return t.questions.map((q, i) => ({
     id: `${t.id}-q${i + 1}`,
     type: 'reading' as const,
     category: 'reading' as const,
@@ -432,5 +432,7 @@ export const LONG_READING_QUESTIONS: Question[] = LONG_TEXTS.flatMap((t) =>
     explanation: q.ex,
     targetRule: 'Lesen: längere Texte verstehen',
     source: 'bank' as const,
-  })),
-);
+  }));
+}
+
+export const LONG_READING_QUESTIONS: Question[] = LONG_TEXTS.flatMap(longTextQuestions);

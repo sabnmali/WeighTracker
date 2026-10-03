@@ -135,6 +135,14 @@ function subscribe(l: () => void) {
   return () => listeners.delete(l);
 }
 
+/** Durum her değiştiğinde çağrılır (eşitleme tetikleyicisi için). */
+export function subscribeStore(l: () => void): () => void {
+  listeners.add(l);
+  return () => {
+    listeners.delete(l);
+  };
+}
+
 export function useStore<T>(selector: (s: AppState) => T): T {
   return useSyncExternalStore(subscribe, () => selector(state));
 }
@@ -238,7 +246,7 @@ export function registerAnswer(q: Question, userAnswer: string, correct: boolean
           : { questionId: q.id, question: q, userAnswer, count: 1, last: Date.now(), fixedStreak: 0 };
       if (idx >= 0) mistakes.splice(idx, 1);
       mistakes.unshift(entry);
-      mistakes = mistakes.slice(0, 400);
+      mistakes = mistakes.slice(0, 250);
     } else if (idx >= 0) {
       const m = { ...mistakes[idx], fixedStreak: mistakes[idx].fixedStreak + 1 };
       if (m.fixedStreak >= 2) mistakes.splice(idx, 1);

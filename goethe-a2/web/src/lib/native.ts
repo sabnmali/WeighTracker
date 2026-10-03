@@ -13,6 +13,7 @@ interface AndroidBridge {
   saveFile(name: string, mime: string, content: string): void;
   printPage(job: string): void;
   httpRequest(id: string, method: string, url: string, headersJson: string, body: string): void;
+  openUrl(url: string): void;
 }
 
 declare global {
@@ -39,24 +40,38 @@ if (typeof window !== 'undefined') {
   };
 }
 
-export async function httpPost(
+export async function httpRequest(
+  method: 'GET' | 'POST',
   url: string,
-  headers: Record<string, string>,
-  body: string,
+  headers: Record<string, string> = {},
+  body = '',
 ): Promise<{ status: number; body: string }> {
   if (bridge) {
     const id = 'r' + Date.now().toString(36) + Math.random().toString(36).slice(2);
     return new Promise((resolve) => {
       pending.set(id, resolve);
-      bridge.httpRequest(id, 'POST', url, JSON.stringify(headers), body);
+      bridge.httpRequest(id, method, url, JSON.stringify(headers), body);
     });
   }
   try {
-    const res = await fetch(url, { method: 'POST', headers, body });
+    const res = await fetch(url, { method, headers, body: method === 'GET' ? undefined : body, cache: 'no-store' });
     return { status: res.status, body: await res.text() };
   } catch (e) {
     return { status: 0, body: String((e as Error)?.message || e) };
   }
+}
+
+export function httpPost(url: string, headers: Record<string, string>, body: string) {
+  return httpRequest('POST', url, headers, body);
+}
+
+export function openUrl(url: string) {
+  if (bridge && typeof bridge.openUrl === 'function') bridge.openUrl(url);
+  else window.open(url, '_blank');
+}
+
+export function isOnline(): boolean {
+  return typeof navigator === 'undefined' || navigator.onLine !== false;
 }
 
 // ------------------------------------------------------------------ TTS
@@ -179,10 +194,13 @@ export function printPage(job: string) {
   else window.print();
 }
 
+/** Web paketinin sürümü (APK'daki versionName ile aynı tutulur). */
+export const APP_VERSION = '3.1.0';
+
 export function appVersion(): string {
   try {
-    return bridge?.getAppVersion() || '3.0.0 (web)';
+    return bridge?.getAppVersion() || APP_VERSION;
   } catch {
-    return '3.0.0';
+    return APP_VERSION;
   }
 }

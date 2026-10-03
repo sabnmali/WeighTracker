@@ -41,6 +41,9 @@ const PATHS: Record<string, string> = {
   bolt: 'M13 2 3 14h9l-1 8 10-12h-9z',
   shuffle: 'M16 3h5v5M4 20 21 3M21 16v5h-5M15 15l6 6M4 4l5 5',
   history: 'M3 3v5h5M3.05 13A9 9 0 1 0 6 5.3L3 8M12 7v5l4 2',
+  cloud: 'M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z',
+  cloudoff: 'M22.61 16.95A5 5 0 0 0 18 10h-1.26a8 8 0 0 0-7.05-6M5 5a8 8 0 0 0 4 15h9a5 5 0 0 0 1.7-.3M1 1l22 22',
+  cloudcheck: 'M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10zM9 14l2 2 4-4',
 };
 
 export function Icon({ name, size = 20, className = '', fill = false }: { name: string; size?: number; className?: string; fill?: boolean }) {

@@ -1,5 +1,6 @@
 import rawWords from '../data/words.json';
 import type { AppState, Word, WordProgress } from '../types';
+import { contentVersion, contentWords, isWordRemoved } from './content';
 
 export const BASE_WORDS: Word[] = rawWords as Word[];
 
@@ -50,12 +51,18 @@ export const TYPE_TR: Record<string, string> = {
   Andere: 'Diğer',
 };
 
-let cache: { custom: Word[]; all: Word[]; byId: Map<string, Word> } | null = null;
+let cache: { custom: Word[]; version: number; all: Word[]; byId: Map<string, Word> } | null = null;
 
+/** Temel liste + internetten gelen içerik güncellemesi (aynı id'yi düzeltir) + kendi kelimeler. */
 export function allWords(custom: Word[]): Word[] {
-  if (cache && cache.custom === custom) return cache.all;
-  const all = [...BASE_WORDS, ...custom];
-  cache = { custom, all, byId: new Map(all.map((w) => [w.id, w])) };
+  const version = contentVersion();
+  if (cache && cache.custom === custom && cache.version === version) return cache.all;
+  const remote = contentWords();
+  const remoteIds = new Map(remote.map((w) => [w.id, w]));
+  const base = BASE_WORDS.filter((w) => !isWordRemoved(w.id)).map((w) => remoteIds.get(w.id) || w);
+  const baseIds = new Set(base.map((w) => w.id));
+  const all = [...base, ...remote.filter((w) => !baseIds.has(w.id) && !isWordRemoved(w.id)), ...custom];
+  cache = { custom, version, all, byId: new Map(all.map((w) => [w.id, w])) };
   return all;
 }
 

@@ -1,0 +1,47 @@
+{
+  "contentVersion": 1,
+  "updatedAt": "2026-10-03",
+  "message": "İlk içerik paketi yüklendi: 2 yeni soru.",
+  "app": {
+    "latestVersion": "3.1.0",
+    "apkUrl": "https://github.com/sabnmali/WeighTracker/raw/ccr-ec1b1133-dmzxke/goethe-a2/release/GoetheA2Trainer.apk",
+    "notes": "Bulut eşitleme (Firebase) ve internetten içerik güncellemeleri eklendi."
+  },
+  "words": [],
+  "questions": [
+    {
+      "id": "c1-fe-treffen-akk",
+      "type": "error_correction",
+      "category": "error_detection",
+      "difficulty": "A2.2",
+      "question": "Welcher Satz ist falsch?",
+      "questionTr": "Hangi cümle dilbilgisi açısından YANLIŞ?",
+      "options": [
+        "Ich habe gestern meinem Freund getroffen.",
+        "Ich habe gestern meinen Freund getroffen.",
+        "Ich habe gestern meinem Freund geholfen.",
+        "Ich habe gestern mit meinem Freund gesprochen."
+      ],
+      "correctAnswer": "Ich habe gestern meinem Freund getroffen.",
+      "explanation": "„treffen“ Akkusativ nesne alır: Ich habe meinEN Freund getroffen. „helfen“ ise Dativ alır: meinEM Freund geholfen.",
+      "errorTrap": "helfen (Dativ) ile treffen (Akkusativ) fiillerinin hâllerini karıştırmak.",
+      "targetRule": "Verben mit Dativ: helfen, danken, gefallen, gehören"
+    },
+    {
+      "id": "c1-pk-mit-dem-fahrrad",
+      "type": "cloze",
+      "category": "prepositions_kasus",
+      "difficulty": "A2.1",
+      "question": "Ich fahre jeden Morgen mit ___ Fahrrad zur Arbeit.",
+      "questionTr": "Boşluğa uygun olanı seçin.",
+      "options": ["dem", "das", "den", "der"],
+      "correctAnswer": "dem",
+      "explanation": "„mit“ Dativ ister. das Fahrrad (nötr) → mit DEM Fahrrad.",
+      "targetRule": "Dativpräpositionen: mit, bei, nach, zu, von, aus, seit"
+    }
+  ],
+  "longTexts": [],
+  "writingTasks": [],
+  "removeQuestionIds": [],
+  "removeWordIds": []
+}

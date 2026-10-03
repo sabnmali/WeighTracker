@@ -1,4 +1,5 @@
 import { LONG_TEXTS } from '../data/readingTexts';
+import { contentLongTexts } from './content';
 import type { AppState, Word } from '../types';
 import { genCloze } from './questionGen';
 import { escapeHtml as e, pick, shuffle, todayKey, weightedSample } from './util';
@@ -215,8 +216,9 @@ export function buildWorksheet(state: AppState, words: Word[], theme?: string): 
   ak.push(`<h4>Teil 4</h4><ol>${ak4.map((x) => `<li>${x}</li>`).join('')}</ol>`);
 
   // ---------- Teil 5
-  const themed = LONG_TEXTS.filter((t) => t.theme === theme);
-  const text = themed.length ? pick(themed) : pick(LONG_TEXTS);
+  const texts = [...LONG_TEXTS, ...contentLongTexts()];
+  const themed = texts.filter((t) => t.theme === theme);
+  const text = themed.length ? pick(themed) : pick(texts);
   parts.push(`<h3>Teil 5 – Lesetext &amp; Vertiefung</h3>`);
   parts.push(`<p><strong>${e(text.title)}</strong> <em>(${e(text.format)})</em></p>`);
   text.text.split(/\n\s*\n/).forEach((p) => parts.push(`<p>${e(p).replace(/\n/g, '<br>')}</p>`));

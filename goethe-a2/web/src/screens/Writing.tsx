@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Badge, Button, Card, Icon, ProgressBar, Segmented, SpeakButton, Spinner, toast } from '../components/ui';
 import { WRITING_TASKS, type WritingTask } from '../data/writingTasks';
+import { contentWritingTasks } from '../lib/content';
 import { GeminiError, evaluateWritingAI } from '../lib/gemini';
 import { navigate, useBackHandler } from '../lib/nav';
 import { addWriting, useStore } from '../lib/store';
@@ -343,7 +344,8 @@ export default function Writing() {
   const [taskId, setTaskId] = useState<string | null>(null);
   const writings = useStore((s) => s.writings);
   const apiKey = useStore((s) => s.settings.apiKey);
-  const task = WRITING_TASKS.find((t) => t.id === taskId);
+  const allTasks = [...WRITING_TASKS, ...contentWritingTasks().filter((t) => !WRITING_TASKS.some((w) => w.id === t.id))];
+  const task = allTasks.find((t) => t.id === taskId);
   if (task) return <Editor task={task} onClose={() => setTaskId(null)} />;
   return (
     <div className="animate-pop space-y-4">
@@ -370,7 +372,7 @@ export default function Writing() {
         ]}
       />
       <div className="space-y-2">
-        {WRITING_TASKS.filter((t) => t.teil === teil).map((t) => {
+        {allTasks.filter((t) => t.teil === teil).map((t) => {
           const done = writings.filter((w) => w.taskId === t.id);
           const best = Math.max(-1, ...done.map((d) => d.evaluation?.total ?? -1));
           return (

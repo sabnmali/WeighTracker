@@ -1,6 +1,8 @@
 import { useMemo, useState } from 'react';
 import { Badge, Button, Card, Icon, ProgressBar, SectionTitle, SpeakButton, StatTile } from '../components/ui';
 import { WordDetailSheet, WordHeadline } from '../components/WordDetail';
+import { availableUpdate, useContentMeta } from '../lib/content';
+import { openUrl } from '../lib/native';
 import { navigate } from '../lib/nav';
 import { avgScore, dayActivity, daysUntil, lastDays, streak } from '../lib/progress';
 import { useStore } from '../lib/store';
@@ -27,6 +29,8 @@ export default function Home() {
   const days = lastDays(state, 7);
   const maxDay = Math.max(goal, ...days.map((d) => d.value), 1);
   const countdown = daysUntil(state.settings.examDate);
+  useContentMeta();
+  const update = availableUpdate();
 
   const wordOfDay = useMemo(() => {
     const cands = all.filter((w) => w.source === 'A2' && w.examples.length);
@@ -76,6 +80,21 @@ export default function Home() {
           )}
         </div>
       </Card>
+
+      {update && (
+        <Card className="mt-4 flex items-center gap-3 border-l-4 border-gold-500 p-4">
+          <Icon name="download" className="text-gold-700" />
+          <div className="min-w-0 flex-1">
+            <p className="font-bold">Yeni sürüm: {update.latestVersion}</p>
+            {update.notes && <p className="line-clamp-2 text-xs text-slate-500">{update.notes}</p>}
+          </div>
+          {update.apkUrl && (
+            <Button small variant="gold" onClick={() => openUrl(update.apkUrl!)}>
+              İndir
+            </Button>
+          )}
+        </Card>
+      )}
 
       <div className="mt-4 grid grid-cols-2 gap-3">
         <Card onClick={() => navigate('cards')} className="p-4">

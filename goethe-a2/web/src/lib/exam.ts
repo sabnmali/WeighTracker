@@ -6,7 +6,8 @@ import {
   READING_QUESTIONS,
   SYNTAX_QUESTIONS,
 } from '../data/grammarBank';
-import { LONG_READING_QUESTIONS } from '../data/readingTexts';
+import { LONG_READING_QUESTIONS, longTextQuestions } from '../data/readingTexts';
+import { contentLongTexts, contentQuestions, isQuestionRemoved } from './content';
 import type { AppState, Question, QuestionCategory, Word } from '../types';
 import { canArticle, canCloze, canPerfekt, canPlural, genForWord, type GenKind } from './questionGen';
 import { shuffle, weightedSample } from './util';
@@ -45,6 +46,11 @@ export const CATEGORY_ICON: Record<QuestionCategory, string> = {
   vocabulary: '🧠',
 };
 
+/** Yerleşik banka + internetten gelen sorular (kaldırılanlar hariç). */
+function pool(bank: Question[], cat: QuestionCategory): Question[] {
+  return [...bank, ...contentQuestions(cat)].filter((q) => !isQuestionRemoved(q.id));
+}
+
 function ruleWeight(state: AppState, q: Question): number {
   const r = state.rules[q.id];
   const tr = q.targetRule ? state.rules['rule:' + q.targetRule] : undefined;
@@ -69,8 +75,8 @@ function pickBank(state: AppState, pool: Question[], n: number): Question[] {
 
 /** Okuma sorularında aynı metinden en fazla 2 soru. */
 function pickReading(state: AppState, n: number): Question[] {
-  const pool = [...READING_QUESTIONS, ...LONG_READING_QUESTIONS];
-  const ordered = weightedSample(pool, (q) => ruleWeight(state, q), pool.length);
+  const all = [...pool([...READING_QUESTIONS, ...LONG_READING_QUESTIONS], 'reading'), ...contentLongTexts().flatMap(longTextQuestions)];
+  const ordered = weightedSample(all, (q) => ruleWeight(state, q), all.length);
   const perText = new Map<string, number>();
   const out: Question[] = [];
   for (const q of ordered) {
@@ -129,22 +135,22 @@ export function buildExam(state: AppState, { mode, count, theme }: BuildOptions)
   const n = count;
   switch (mode) {
     case 'error':
-      qs = pickBank(state, ERROR_QUESTIONS, n);
+      qs = pickBank(state, pool(ERROR_QUESTIONS, 'error_detection'), n);
       break;
     case 'kasus':
-      qs = pickBank(state, KASUS_QUESTIONS, n);
+      qs = pickBank(state, pool(KASUS_QUESTIONS, 'prepositions_kasus'), n);
       break;
     case 'grammar': {
       const bankN = Math.round(n * 0.65);
-      qs = [...pickBank(state, GRAMMAR_QUESTIONS, bankN), ...genVocab(state, n - bankN, ['perfekt', 'plural'], theme)];
+      qs = [...pickBank(state, pool(GRAMMAR_QUESTIONS, 'grammar'), bankN), ...genVocab(state, n - bankN, ['perfekt', 'plural'], theme)];
       break;
     }
     case 'dialogue':
-      qs = pickBank(state, DIALOGUE_QUESTIONS, n);
+      qs = pickBank(state, pool(DIALOGUE_QUESTIONS, 'dialogue'), n);
       break;
     case 'reading': {
       const synN = Math.round(n * 0.35);
-      qs = [...pickBank(state, SYNTAX_QUESTIONS, synN), ...pickReading(state, n - synN)];
+      qs = [...pickBank(state, pool(SYNTAX_QUESTIONS, 'sentence_syntax'), synN), ...pickReading(state, n - synN)];
       break;
     }
     case 'vocab':
@@ -174,21 +180,21 @@ export function buildExam(state: AppState, { mode, count, theme }: BuildOptions)
       const cDia = Math.round(n * 0.15);
       const cRead = Math.max(1, Math.round(n * 0.1));
       const cVoc = Math.max(0, n - cErr - cKas - cGra - cDia - cRead);
-      plan.push([cErr, () => pickBank(state, ERROR_QUESTIONS, cErr)]);
-      plan.push([cKas, () => pickBank(state, KASUS_QUESTIONS, cKas)]);
+      plan.push([cErr, () => pickBank(state, pool(ERROR_QUESTIONS, 'error_detection'), cErr)]);
+      plan.push([cKas, () => pickBank(state, pool(KASUS_QUESTIONS, 'prepositions_kasus'), cKas)]);
       plan.push([
         cGra,
         () => {
           const g = Math.ceil(cGra * 0.7);
-          return [...pickBank(state, GRAMMAR_QUESTIONS, g), ...genVocab(state, cGra - g, ['perfekt', 'plural'], theme)];
+          return [...pickBank(state, pool(GRAMMAR_QUESTIONS, 'grammar'), g), ...genVocab(state, cGra - g, ['perfekt', 'plural'], theme)];
         },
       ]);
-      plan.push([cDia, () => pickBank(state, DIALOGUE_QUESTIONS, cDia)]);
+      plan.push([cDia, () => pickBank(state, pool(DIALOGUE_QUESTIONS, 'dialogue'), cDia)]);
       plan.push([
         cRead,
         () => {
           const s = Math.floor(cRead / 2);
-          return [...pickBank(state, SYNTAX_QUESTIONS, s), ...pickReading(state, cRead - s)];
+          return [...pickBank(state, pool(SYNTAX_QUESTIONS, 'sentence_syntax'), s), ...pickReading(state, cRead - s)];
         },
       ]);
       plan.push([cVoc, () => genVocab(state, cVoc, ['cloze', 'meaning', 'reverse', 'article'], theme)]);

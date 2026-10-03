@@ -1,6 +1,7 @@
 import { useRef, useState, type ReactNode } from 'react';
 import { Badge, Button, Card, Confirm, Segmented, SectionTitle, toast } from '../components/ui';
 import { sayGerman } from '../components/ui';
+import { CloudSyncSection, ContentUpdateSection } from '../components/CloudSync';
 import { exportJson, importBackup } from '../lib/backup';
 import { GeminiError, testApiKey } from '../lib/gemini';
 import { appVersion, isNative, openTtsSettings, saveFile, shareText, ttsStatus } from '../lib/native';
@@ -198,7 +199,13 @@ export default function Settings() {
         </div>
       </Card>
 
-      <SectionTitle>Yedekleme & cihazlar arası taşıma</SectionTitle>
+      <SectionTitle>Bulut eşitleme (Firebase)</SectionTitle>
+      <CloudSyncSection />
+
+      <SectionTitle>İçerik & uygulama güncellemeleri</SectionTitle>
+      <ContentUpdateSection />
+
+      <SectionTitle>Dosya ile yedekleme</SectionTitle>
       <Card className="space-y-3 p-4">
         <p className="text-sm text-slate-600 dark:text-slate-300">
           Tüm ilerlemen (kelimeler, hata hafızası, sınavlar, yazılar, ayarlar) tek bir JSON dosyasıdır. Diğer cihazda „Birleştir“ dersen iki cihazın ilerlemesi

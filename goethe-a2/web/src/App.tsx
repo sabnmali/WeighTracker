@@ -1,5 +1,8 @@
 import { useEffect, type ReactNode } from 'react';
-import { Icon, ToastHost } from './components/ui';
+import { syncPhaseInfo } from './components/CloudSync';
+import { Icon, ToastHost, toast } from './components/ui';
+import { startContentUpdates, useContentMeta } from './lib/content';
+import { startAutoSync, useSyncStatus } from './lib/sync';
 import { goBackRoute, navigate, TAB_ROUTES, useRoute, type RouteName } from './lib/nav';
 import { useStore } from './lib/store';
 import Cards from './screens/Cards';
@@ -51,7 +54,14 @@ function useThemeClass() {
 
 export default function App() {
   useThemeClass();
+  useContentMeta(); // içerik güncellenince tüm ekranlar yeniden çizilsin
+  const sync = useSyncStatus();
   const route = useRoute();
+  useEffect(() => {
+    startAutoSync();
+    startContentUpdates((msg) => toast(`📦 ${msg}`));
+  }, []);
+  const [syncLabel, , syncIcon] = syncPhaseInfo(sync.phase);
   const isTab = TAB_ROUTES.includes(route.name);
 
   let screen: ReactNode;
@@ -98,6 +108,19 @@ export default function App() {
           <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-white/10 font-serif text-sm font-black tracking-tight">A2</span>
         )}
         <h1 className="ml-1 flex-1 truncate text-lg font-bold">{TITLES[route.name]}</h1>
+        {(
+          <button
+            onClick={() => navigate('settings')}
+            className={`relative rounded-full p-2 hover:bg-white/10 ${sync.phase === 'syncing' ? 'animate-pulse' : ''}`}
+            aria-label={`Eşitleme: ${syncLabel}`}
+            title={syncLabel}
+          >
+            <Icon name={syncIcon} size={20} />
+            {(sync.phase === 'error' || sync.phase === 'signedOut' || sync.phase === 'pending' || sync.phase === 'offline') && (
+              <span className={`absolute right-1.5 top-1.5 h-2 w-2 rounded-full ${sync.phase === 'error' ? 'bg-rose-400' : 'bg-gold-500'}`} />
+            )}
+          </button>
+        )}
         {route.name !== 'settings' && (
           <button onClick={() => navigate('settings')} className="rounded-full p-2 hover:bg-white/10" aria-label="Ayarlar">
             <Icon name="settings" size={20} />
